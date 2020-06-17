@@ -1,0 +1,43 @@
+server:
+ port : 10222
+
+shortener:
+ id-length: ${LENGTH_ID:6}
+ domain: ${DOMAIN_NAME:http://localhost:102222/url/}
+
+spring:
+ jpa:
+  properties.hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+  hibernate:
+   ddl-auto: update
+
+ datasource:
+  url: jdbc:mysql://${MYSQL_HOST:docker-mysql}:3306/db_shortener
+  username: ${DB_USER:root}
+  password: ${DB_PASSWORD:root}
+  testWhileIdle: true
+  validationQuery: SELECT 1
+
+logging:
+ level:
+  org:
+   springframework:
+    web: ${WEB_LOG_LEVEL:DEBUG}
+  hibernate: ${DB_LOG_LEVEL:ERROR}
+  net:
+   guides: ${NET_LOG_LEVEL:DEBUG}
+
+management:
+ endpoints:
+  web:
+   exposure:
+    include: "health,info,metrics"
+
+
+info:
+ app:
+  name: Url-Shortner
+  version: 1.0
+  encoding: UTF-8
+  java:
+   version: 1.8
